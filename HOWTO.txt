@@ -1,0 +1,48 @@
+@SDCard preparation - Rasbian installation
+diskutil list
+diskutil unmountDisk /dev/disk4
+sudo dd bs=1m if=/Users/Onnz/Documents/2015-05-05-raspbian-wheezy.img of=/dev/rdisk4
+
+
+@Client
+sudo su
+apt-get update
+apt-get upgrade
+apt-get install bluez python-bluez python-pip autossh screen
+
+@For Edison only
+wget http://www.harding.motd.ca/autossh/autossh-1.4e.tgz
+tar -xf autossh-1.4e.tgz
+cd autossh-1.4e
+./configure
+make
+make install
+@—————
+
+pip install unirest
+pip install requests
+ssh-keygen -t rsa
+ssh-copy-id blue@bluetooth.netburzt.com  #type password ecobzThKvblue
+#try ssh, it have to ssh though without asking password
+ssh blue@bluetooth.netburzt.com
+mkdir /srv/bt_monitor
+mkdir /srv/bt_monitor/save
+mkdir /srv/bt_monitor/log
+cd /srv/bt_monitor
+wget --no-check-certificate https://www.dropbox.com/s/09yd06khn694uss/bluetooth_scan.py
+wget --no-check-certificate https://www.dropbox.com/s/qvijrvyaf5tv7bb/bluetooth_scan_offline.py
+wget --no-check-certificate https://www.dropbox.com/s/ioyw88l2vzhukhh/async_datasend.py
+wget --no-check-certificate https://www.dropbox.com/s/oof4dishkqeaoc2/check_internet.py
+wget --no-check-certificate https://www.dropbox.com/s/x336zv8wwab2yxb/device_active.py
+wget --no-check-certificate https://www.dropbox.com/s/lq9vt3zs9qsuo3i/reboot_mr3020.py
+wget --no-check-certificate https://www.dropbox.com/s/whc44a2eacjoeuh/id.txt
+nano id.txt # change ID
+crontab -e
+##EDIT 60050 and 6005 respectively for id 05; to apply current DeviceNO use 60xy0 for service port and 60xy for reverse port FOR ID xy
+@reboot /bin/sleep 60 ; /usr/bin/screen -S reverse-ssh-tunnel -d -m autossh -M 60050 -o "ServerAliveInterval 20" -o "ServerAliveCountMax 3" -R 6005:localhost:22 blue@bluetooth.netburzt.com > tunnel.log 2>&1
+@reboot /bin/sleep 60 ; /usr/bin/python /srv/bt_monitor/bluetooth_scan_offline.py ; /sbin/reboot
+@reboot /bin/sleep 75 ; /usr/bin/python /srv/bt_monitor/async_datasend.py
+*/1 * * * * /usr/bin/python /srv/bt_monitor/device_active.py
+*/4 * * * * /usr/bin/python /srv/bt_monitor/check_internet.py
+0 2 * * * /usr/bin/python /srv/bt_monitor/reboot_mr3020.py
+0 3 * * * /sbin/reboot

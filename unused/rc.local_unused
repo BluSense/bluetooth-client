@@ -1,0 +1,4 @@
+/usr/bin/usb_modeswitch -c /etc/usb_modeswitch.conf
+/bin/sleep 10
+/usr/bin/sakis3g --sudo "connect"
+exit 0
