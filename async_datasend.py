@@ -63,7 +63,7 @@ while True:
                     os.remove(fname)
     	        current_file.close()
         else:
-            print("Waiting 15s for files")
+            print("Waiting 60s for files")
             time.sleep(60)
 
     except:
