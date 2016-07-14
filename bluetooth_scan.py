@@ -13,7 +13,7 @@ import bluetooth._bluetooth as bluez
 # --------------
 
 def getCurrentDatetime():
-    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
 
 def printpacket(pkt):
     for c in pkt:

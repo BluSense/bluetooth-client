@@ -40,7 +40,7 @@ def sendData(data,url,fname):
 
     #except requests.ConnectionError:
     except:
-        print("Connection Error")
+        print("Error Response code" + r.status_code)
         time.sleep(60)
 
 while True:
