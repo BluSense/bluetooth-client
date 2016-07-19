@@ -5,6 +5,8 @@ diskutil unmountDisk /dev/disk4
 sudo dd bs=1m if=/Users/Onnz/Documents/2015-05-05-raspbian-wheezy.img of=/dev/rdisk4
 =============================
 
+raspi-config
+
 @Client
 -----------------------------
 sudo su
@@ -33,4 +35,6 @@ crontab -e
 */4 * * * * /usr/bin/python /srv/bt_monitor/check_internet.py
 0 2 * * * /usr/bin/python /srv/bt_monitor/reboot_mr3020.py
 0 3 * * * /sbin/reboot
+apt-get install weavedconnectd
+
 =============================
