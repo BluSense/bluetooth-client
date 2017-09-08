@@ -9,6 +9,7 @@
   - Review your selections and click 'Flash!' to begin writing data to the SD card.
 4. Plug & Run & Connect to LAN-Internet
 @Raspberry Pi
+-----------------------------
 5. Goto Start > Preferences > Raspberry Pi Configuration
     - Goto Interface TAB > SSH > Enable
     - Goto Localisation TAB > Set Timezone >
@@ -19,12 +20,4 @@
 8. Type wget -O install.sh goo.gl/
 9. Type chmod +x install.sh
 10. Type ./install.sh
-
-=============================
-
-raspi-config
-
-@Client
------------------------------
-
 =============================
