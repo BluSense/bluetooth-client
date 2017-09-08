@@ -7,7 +7,6 @@ echo ""
 echo "Enter your RaspPi device id :"
 read deviceid
 
-sudo su
 apt-get update
 apt-get dist-upgrade
 apt-get install bluez python-bluez python-pip screen
