@@ -1,40 +1,30 @@
 @SDCard preparation - Rasbian installation
 -----------------------------
-diskutil list
-diskutil unmountDisk /dev/disk4
-sudo dd bs=1m if=/Users/Onnz/Documents/2015-05-05-raspbian-wheezy.img of=/dev/rdisk4
+1. Download "RASPBIAN STRETCH WITH DESKTOP" --> https://downloads.raspberrypi.org/raspbian_latest
+2. Download Etcher and install it.
+3. Flash SDCARD
+  - Connect an SD card reader with the SD card inside.
+  - Open Etcher and select from your hard drive the Raspberry Pi .img or  .zip file you wish to write to the SD card.
+  - Select the SD card you wish to write your image to.
+  - Review your selections and click 'Flash!' to begin writing data to the SD card.
+4. Plug & Run & Connect to LAN-Internet
+@Raspberry Pi
+5. Goto Start > Preferences > Raspberry Pi Configuration
+    - Goto Interface TAB > SSH > Enable
+    - Goto Localisation TAB > Set Timezone >
+      -- Area -> Asia
+      -- Location -> Bangkok
+6. Open terminal
+7. Type sudo su
+8. Type wget -O install.sh goo.gl/
+9. Type chmod +x install.sh
+10. Type ./install.sh
+
 =============================
 
 raspi-config
 
 @Client
 -----------------------------
-sudo su
-apt-get update
-apt-get upgrade
-apt-get install bluez python-bluez python-pip screen
-pip install unirest
-pip install requests
-mkdir /srv/bt_monitor
-mkdir /srv/bt_monitor/save
-mkdir /srv/bt_monitor/log
-cd /srv/bt_monitor
-wget --no-check-certificate https://www.dropbox.com/s/09yd06khn694uss/bluetooth_scan.py
-wget --no-check-certificate https://www.dropbox.com/s/qvijrvyaf5tv7bb/bluetooth_scan_offline.py
-wget --no-check-certificate https://www.dropbox.com/s/ioyw88l2vzhukhh/async_datasend.py
-wget --no-check-certificate https://www.dropbox.com/s/oof4dishkqeaoc2/check_internet.py
-wget --no-check-certificate https://www.dropbox.com/s/x336zv8wwab2yxb/device_active.py
-wget --no-check-certificate https://www.dropbox.com/s/lq9vt3zs9qsuo3i/reboot_mr3020.py
-wget --no-check-certificate https://www.dropbox.com/s/whc44a2eacjoeuh/id.txt
-nano id.txt # change ID
-crontab -e
-#Add the following line
-@reboot /bin/sleep 60 ; /usr/bin/python /srv/bt_monitor/bluetooth_scan_offline.py ; /sbin/reboot
-@reboot /bin/sleep 75 ; /usr/bin/python /srv/bt_monitor/async_datasend.py
-*/1 * * * * /usr/bin/python /srv/bt_monitor/device_active.py
-*/4 * * * * /usr/bin/python /srv/bt_monitor/check_internet.py
-0 2 * * * /usr/bin/python /srv/bt_monitor/reboot_mr3020.py
-0 3 * * * /sbin/reboot
-apt-get install weavedconnectd
 
 =============================
