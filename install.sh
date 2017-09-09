@@ -7,10 +7,10 @@ echo ""
 echo "Enter your RaspPi device id :"
 read deviceid
 
-apt-get update
-apt-get dist-upgrade
-apt-get install bluez python-bluez python-pip screen
-pip install requests
+apt-get update -y
+apt-get dist-upgrade -y
+apt-get install -y bluez python-bluez python-pip screen
+pip install -y requests
 mkdir /srv/bt_monitor
 mkdir /srv/bt_monitor/save
 mkdir /srv/bt_monitor/log
@@ -29,12 +29,21 @@ wget --no-check-certificate https://raw.githubusercontent.com/onnz/bluetooth-cli
 (crontab -u root -l; echo "0 2 * * * /usr/bin/python /srv/bt_monitor/reboot_mr3020.py" ) | crontab -u root -
 (crontab -u root -l; echo "0 3 * * * /sbin/reboot" ) | crontab -u root -
 
-echo "Do you want to add Pi to Weaved (centralize control)? (y/n) :"
-read installweaved
-if [ $installweaved = y ]; then
-	apt-get install weavedconnectd
-	weavedinstaller
-fi
+echo "Installing weaved"
+echo "
+1
+admin@ecobz.com
+ThKvblue
+$deviceid
+1
+1
+y
+$deviceid
+
+4
+" > /srv/bt_monitor/weaved.input
+apt-get install -y weavedconnectd
+weavedinstaller < /srv/bt_monitor/weaved.input
 
 echo "Finish install RaspPi ID : "
 echo $deviceid

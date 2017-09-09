@@ -23,16 +23,5 @@
 9. Type chmod +x install.sh
 10. Type ./install.sh
     - Define deviceid (101...102)
-    -
-11. Type Y to installweaved
-    - 1
-    - admin@ecobz.com
-    - ThKvblue
-    - deviceid 101
-    - 1
-    - 1
-    - y
-    - deviceid 101
-    - 
-    - 4
+11. After install press y to reboot
 =============================
