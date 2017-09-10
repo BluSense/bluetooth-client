@@ -22,8 +22,8 @@ wget --no-check-certificate https://raw.githubusercontent.com/onnz/bluetooth-cli
 wget --no-check-certificate https://raw.githubusercontent.com/onnz/bluetooth-client/master/check_internet.py
 wget --no-check-certificate https://raw.githubusercontent.com/onnz/bluetooth-client/master/device_active.py
 wget --no-check-certificate https://raw.githubusercontent.com/onnz/bluetooth-client/master/reboot_mr3020.py
-(crontab -u root -l; echo "@reboot /bin/sleep 60 ; /usr/bin/python /srv/bt_monitor/bluetooth_scan_offline.py ; /sbin/reboot" ) | crontab -u root -
-(crontab -u root -l; echo "@reboot /bin/sleep 75 ; /usr/bin/python /srv/bt_monitor/async_datasend.py" ) | crontab -u root -
+(crontab -u root -l; echo "@reboot /bin/sleep 180 ; /usr/bin/python /srv/bt_monitor/bluetooth_scan_offline.py ; /sbin/reboot" ) | crontab -u root -
+(crontab -u root -l; echo "@reboot /bin/sleep 200 ; /usr/bin/python /srv/bt_monitor/async_datasend.py" ) | crontab -u root -
 (crontab -u root -l; echo "*/1 * * * * /usr/bin/python /srv/bt_monitor/device_active.py" ) | crontab -u root -
 (crontab -u root -l; echo "*/4 * * * * /usr/bin/python /srv/bt_monitor/check_internet.py" ) | crontab -u root -
 (crontab -u root -l; echo "0 2 * * * /usr/bin/python /srv/bt_monitor/reboot_mr3020.py" ) | crontab -u root -
