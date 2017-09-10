@@ -86,7 +86,7 @@ echo "
 auto ppp0
 iface ppp0 inet ppp
         provider gprs
-        pre-up until /usr/bin/test -e /dev/ttyUSB3; do /bin/sleep 3; done
-" > /etc/network/interfaces.d/ppp-gprs 
+        pre-up until /usr/bin/test -e /dev/$2; do /bin/sleep 3; done
+" > /etc/network/interfaces.d/ppp-gprs
 
-echo "\n\nUse \"sudo pppd call gprs\" command and Surf"
+echo "\n\nUse \"sudo ifup ppp0\" or \"sudo pppd call gprs\" command and Surf"
