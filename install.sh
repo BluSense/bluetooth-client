@@ -47,7 +47,7 @@ read deviceid
 apt-get update -y
 apt-get dist-upgrade -y
 apt-get install -y bluez python-bluez python-pip screen
-pip install -y requests
+pip install requests
 mkdir /srv/bt_monitor
 mkdir /srv/bt_monitor/save
 mkdir /srv/bt_monitor/log
