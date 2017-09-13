@@ -1,4 +1,4 @@
-@SDCard preparation - Rasbian installation
+sudo@SDCard preparation - Rasbian installation
 -----------------------------
 1. Download "RASPBIAN STRETCH WITH DESKTOP" --> https://downloads.raspberrypi.org/raspbian_latest
 2. Download Etcher and install it. --> https://etcher.io/
@@ -17,6 +17,7 @@
       -- Location -> Bangkok
     - Goto Locale
       -- Country US
+    - Yes to reboot
 6. Open terminal
 7. Type sudo su
 8. Type wget -O install.sh https://goo.gl/BciKTo

@@ -4,7 +4,7 @@ echo "--------------------------------------"
 echo "Welcome to Chula Bluetooth scan client"
 echo "--------------------------------------"
 echo ""
-echo "Enter your RaspPi device id :"
+echo "Enter your RaspberryPi device id :"
 read deviceid
 
 apt-get update -y
@@ -38,12 +38,13 @@ $deviceid
 1
 1
 y
-$deviceid
-
+SSH-Pi-$deviceid
 4
 " > /srv/bt_monitor/weaved.input
 apt-get install -y weavedconnectd
 weavedinstaller < /srv/bt_monitor/weaved.input
+
+rm /srv/bt_monitor/weaved.input
 
 echo "Finish install RaspPi ID : "
 echo $deviceid
