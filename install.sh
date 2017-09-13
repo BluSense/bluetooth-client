@@ -29,7 +29,12 @@ wget --no-check-certificate https://raw.githubusercontent.com/onnz/bluetooth-cli
 (crontab -u root -l; echo "0 2 * * * /usr/bin/python /srv/bt_monitor/reboot_mr3020.py" ) | crontab -u root -
 (crontab -u root -l; echo "0 3 * * * /sbin/reboot" ) | crontab -u root -
 
-echo "Installing weaved"
+systemctl enable ssh
+timedatectl set-timezone Asia/Bangkok
+apt-get install ntpdate
+ntpd -gq
+
+echo "Installing Weaved"
 echo "
 1
 admin@ecobz.com
