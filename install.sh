@@ -44,6 +44,9 @@ echo ""
 echo "Enter your RaspberryPi device id :"
 read deviceid
 
+echo "deb http://mirror1.ku.ac.th/raspbian/raspbian/ stretch main contrib non-free rpi" >> /etc/apt/sources.list
+cat /etc/apt/sources.list
+
 apt-get update -y
 apt-get dist-upgrade -y
 apt-get install -y bluez python-bluez python-pip screen
