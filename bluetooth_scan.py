@@ -252,7 +252,7 @@ while True:
         jsonResult = serializeJSON(rows)
 
         if(len(rows) != 0):
-            sendData(jsonResult,'http://bluetooth.netburzt.com/Bluetooth.php')
+            sendData(jsonResult,'http://api.blusense.co/Bluetooth.php')
     	
         del rows
         del jsonResult

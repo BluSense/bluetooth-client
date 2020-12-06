@@ -54,7 +54,7 @@ while True:
                 data = current_file.read()
                 if len(data) != 0:
                     if is_json(data):
-                        sendData(data,'http://bluetooth.netburzt.com/Bluetooth.php',fname)
+                        sendData(data,'http://api.blusense.co/Bluetooth.php',fname)
                     else:
                         print("Json file corrupting")
                         os.rename(fname, fname + '.err')

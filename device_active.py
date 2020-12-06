@@ -17,6 +17,6 @@ id = numbers
 
 data = {'device_id': id}
 headers = {'Context-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
-url = 'http://bluetooth.netburzt.com/activate_device.php'
+url = 'http://api.blusense.co/activate_device.php'
 r = requests.post(url, data=data, headers=headers)
 print r.status_code
