@@ -43,32 +43,32 @@ def sendData(data,url,fname):
         print("Error Response code" + r.status_code)
         time.sleep(60)
 
-while True:
-    try:
-        files_to_send = glob.glob("/srv/bt_monitor/save/*.log")
-        print(files_to_send)
-        if(len(files_to_send) != 0):
-            for fname in files_to_send:
-                print(fname)
-                current_file = open(fname, 'r')
-                data = current_file.read()
-                if len(data) != 0:
-                    if is_json(data):
-                        sendData(data,'http://api.blusense.co/Bluetooth.php',fname)
-                    else:
-                        print("Json file corrupting")
-                        os.rename(fname, fname + '.err')
+#while True:
+#Run to sync file
+try:
+    files_to_send = glob.glob("/srv/bt_monitor/save/*.log")
+    #print(files_to_send)
+    if(len(files_to_send) != 0):
+        for fname in files_to_send:
+            print(fname)
+            current_file = open(fname, 'r')
+            data = current_file.read()
+            if len(data) != 0:
+                if is_json(data):
+                    sendData(data,'http://api.blusense.co/Bluetooth.php',fname)
                 else:
-                    print("No data to sent")
-                    os.remove(fname)
-    	        current_file.close()
-        else:
-            print("Waiting 60s for files")
-            time.sleep(60)
+                    print("Json file corrupting")
+                    os.rename(fname, fname + '.err')
+            else:
+                print("No data to sent")
+                os.remove(fname)
+	        current_file.close()
 
-    except:
-        print("Found Error")
-        time.sleep(60)
-        #sys.exit(0)
-    finally:
-        print("Finish loop")
+    sys.exit(0)
+
+except:
+    print("Found Error")
+    #time.sleep(60)
+    sys.exit(1)
+finally:
+    print("Finish loop")
