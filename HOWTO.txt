@@ -1,6 +1,6 @@
 sudo@SDCard preparation - Rasbian installation
 -----------------------------
-1. Download "RASPBIAN STRETCH LITE" --> https://downloads.raspberrypi.org/raspbian_lite_latest
+1. Download "RASPBIAN xxx LITE" --> https://downloads.raspberrypi.org/raspbian_lite_latest
 2. Download Etcher and install it. --> https://etcher.io/
 3. Flash SDCARD
   - Connect an SD card reader with the SD card inside.
@@ -16,6 +16,5 @@ sudo@SDCard preparation - Rasbian installation
 8. Type wget -O install.sh https://t.ly/ktWi
 9. Type chmod +x install.sh
 10. Type ./install.sh
-    - Define deviceid (101...102)
 11. After install press y to reboot
 =============================

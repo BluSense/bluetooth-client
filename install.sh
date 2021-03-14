@@ -41,15 +41,29 @@ echo "--------------------------------------"
 echo "Welcome to Chula Bluetooth scan client"
 echo "--------------------------------------"
 echo ""
-echo "Enter your RaspberryPi device id :"
-read deviceid
+echo "Your RaspberryPi device id :"
+#read deviceid
+#Set default deviceid
+random_number = $[ ( $RANDOM % 100 )  + 1 ]
+deviceid = "x${random_number}"
+
+#read pi sn.
+procinfo = $(cat /proc/cpuinfo | grep Serial)
+rpi_serial = $(echo $procinfo | tr " " "\n" | tail -1)
+
+if [ -z $rpi_serial ]; then
+    echo "Raspberry Pi serial number not found" >> $LOG_FILE 2>&1
+else
+		deviceid = $rpi_serial
+    echo $deviceid
+fi
 
 echo "Is connect to Industial 4G Router? (y/n)"
 read is_industialrouter
 
 
 #echo "deb http://mirror1.ku.ac.th/raspbian/raspbian/ stretch main contrib non-free rpi" >> /etc/apt/sources.list
-cat /etc/apt/sources.list
+#cat /etc/apt/sources.list
 
 apt-get update -y
 apt-get dist-upgrade -y
@@ -60,16 +74,16 @@ mkdir /srv/bt_monitor/save
 mkdir /srv/bt_monitor/log
 cd /srv/bt_monitor
 echo $deviceid >> id.txt
-wget --no-check-certificate https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan.py
-wget --no-check-certificate https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan_offline.py
-wget --no-check-certificate https://raw.githubusercontent.com/BluSense/bluetooth-client/master/async_datasend.py
-wget --no-check-certificate https://raw.githubusercontent.com/BluSense/bluetooth-client/master/check_internet.py
-wget --no-check-certificate https://raw.githubusercontent.com/BluSense/bluetooth-client/master/device_active.py
-wget --no-check-certificate https://raw.githubusercontent.com/BluSense/bluetooth-client/master/reboot_mr3020.py
+curl -s https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan.py
+curl -s https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan_offline.py
+curl -s https://raw.githubusercontent.com/BluSense/bluetooth-client/master/async_datasend.py
+curl -s https://raw.githubusercontent.com/BluSense/bluetooth-client/master/check_internet.py
+curl -s https://raw.githubusercontent.com/BluSense/bluetooth-client/master/device_active.py
+curl -s https://raw.githubusercontent.com/BluSense/bluetooth-client/master/reboot_mr3020.py
 (crontab -u root -l; echo "@reboot /bin/sleep 180 ; /usr/bin/python /srv/bt_monitor/bluetooth_scan_offline.py ; /sbin/reboot" ) | crontab -u root -
 (crontab -u root -l; echo "@reboot /bin/sleep 200 ; /usr/bin/python /srv/bt_monitor/async_datasend.py" ) | crontab -u root -
 (crontab -u root -l; echo "*/1 * * * * /usr/bin/python /srv/bt_monitor/device_active.py" ) | crontab -u root -
-if [ $isreboot = n ]; then
+if [ $is_industialrouter = n ]; then
 	(crontab -u root -l; echo "*/4 * * * * /usr/bin/python /srv/bt_monitor/check_internet.py" ) | crontab -u root -
 	(crontab -u root -l; echo "0 2 * * * /usr/bin/python /srv/bt_monitor/reboot_mr3020.py" ) | crontab -u root -
 fi
@@ -80,24 +94,9 @@ timedatectl set-timezone Asia/Bangkok
 apt-get install ntpdate
 ntpd -gq
 
-#echo "Installing Weaved"
-#echo "
-#1
-#admin@ecobz.com
-#ThKvblue
-#$deviceid
-#1
-#1
-#y
-#SSH-Pi-$deviceid
-#4
-#" > /srv/bt_monitor/weaved.input
-#apt-get install -y weavedconnectd
-#weavedinstaller < /srv/bt_monitor/weaved.input
+#installing remote management from dataplicity
 
-#rm /srv/bt_monitor/weaved.input
-
-sudo apt install remoteit
+curl -s https://www.dataplicity.com/pyx825ve.py | sudo python
 
 echo "   ___  _         _       _     "
 echo "  / __\(_) _ __  (_) ___ | |__  "

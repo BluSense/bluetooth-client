@@ -5,8 +5,6 @@ import urllib2
 import urllib
 import httplib
 import json
-#import requests
-#import unirest
 import struct
 import bluetooth._bluetooth as bluez
 
@@ -18,7 +16,7 @@ def getCurrentDatetime():
 def printpacket(pkt):
     for c in pkt:
         sys.stdout.write("%02x " % struct.unpack("B",c)[0])
-    print() 
+    print()
 
 def read_inquiry_mode(sock):
     """returns the current mode, or -1 on failure"""
@@ -28,7 +26,7 @@ def read_inquiry_mode(sock):
     # Setup socket filter to receive only events related to the
     # read_inquiry_mode command
     flt = bluez.hci_filter_new()
-    opcode = bluez.cmd_opcode_pack(bluez.OGF_HOST_CTL, 
+    opcode = bluez.cmd_opcode_pack(bluez.OGF_HOST_CTL,
             bluez.OCF_READ_INQUIRY_MODE)
     bluez.hci_filter_set_ptype(flt, bluez.HCI_EVENT_PKT)
     bluez.hci_filter_set_event(flt, bluez.EVT_CMD_COMPLETE);
@@ -36,7 +34,7 @@ def read_inquiry_mode(sock):
     sock.setsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, flt )
 
     # first read the current inquiry mode.
-    bluez.hci_send_cmd(sock, bluez.OGF_HOST_CTL, 
+    bluez.hci_send_cmd(sock, bluez.OGF_HOST_CTL,
             bluez.OCF_READ_INQUIRY_MODE )
 
     pkt = sock.recv(255)
@@ -56,7 +54,7 @@ def write_inquiry_mode(sock, mode):
     # Setup socket filter to receive only events related to the
     # write_inquiry_mode command
     flt = bluez.hci_filter_new()
-    opcode = bluez.cmd_opcode_pack(bluez.OGF_HOST_CTL, 
+    opcode = bluez.cmd_opcode_pack(bluez.OGF_HOST_CTL,
             bluez.OCF_WRITE_INQUIRY_MODE)
     bluez.hci_filter_set_ptype(flt, bluez.HCI_EVENT_PKT)
     bluez.hci_filter_set_event(flt, bluez.EVT_CMD_COMPLETE);
@@ -64,7 +62,7 @@ def write_inquiry_mode(sock, mode):
     sock.setsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, flt )
 
     # send the command!
-    bluez.hci_send_cmd(sock, bluez.OGF_HOST_CTL, 
+    bluez.hci_send_cmd(sock, bluez.OGF_HOST_CTL,
             bluez.OCF_WRITE_INQUIRY_MODE, struct.pack("B", mode) )
 
     pkt = sock.recv(255)
@@ -204,10 +202,10 @@ def generateRows(rawResult,addrDict = {}):
         return {
             #'runloop':countLoop,
             'mac_address':item[0],
-            'signal':item[1], 
-            'device_id':device_id, 
-            'datetime':item[2], 
-            'name':addrDict.get[item[0]] if addrDict.get(item[0],None) != None else '-' 
+            'signal':item[1],
+            'device_id':device_id,
+            'datetime':item[2],
+            'name':addrDict.get[item[0]] if addrDict.get(item[0],None) != None else '-'
         }
 
     return map(iterate,logs)
