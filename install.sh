@@ -48,8 +48,8 @@ random_number=$[ ( $RANDOM % 100 )  + 1 ]
 deviceid="x${random_number}"
 
 #read pi sn.
-$procinfo=$(cat /proc/cpuinfo | grep Serial)
-$rpi_serial=$(echo $procinfo | tr " " "\n" | tail -1)
+procinfo=$(cat /proc/cpuinfo | grep Serial)
+rpi_serial=$(echo $procinfo | tr " " "\n" | tail -1)
 
 if [ -z $rpi_serial ]; then
     echo "Raspberry Pi serial number not found"
