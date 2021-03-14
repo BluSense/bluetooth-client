@@ -167,15 +167,15 @@ def closeSocket(sock):
 
 def getDeviceID(filename = 'id.txt'):
     # Initialization
-    device_id = 90
+    device_id = "dev_id_default_id"
     currentDir = os.path.dirname(os.path.realpath(__file__))
     pathfile = os.path.join(currentDir,filename)
     try:
         file = open(pathfile, "r")
-        strint = file.read()
-        device_id = int(strint)
+        pi_id = file.read()
+        device_id = str(pi_id)
     except IOError:
-        device_id = 90
+        device_id = "dev_id_read_err"
 
     return device_id
 

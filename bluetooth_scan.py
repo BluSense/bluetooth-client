@@ -18,7 +18,7 @@ def getCurrentDatetime():
 def printpacket(pkt):
     for c in pkt:
         sys.stdout.write("%02x " % struct.unpack("B",c)[0])
-    print() 
+    print()
 
 def read_inquiry_mode(sock):
     """returns the current mode, or -1 on failure"""
@@ -28,7 +28,7 @@ def read_inquiry_mode(sock):
     # Setup socket filter to receive only events related to the
     # read_inquiry_mode command
     flt = bluez.hci_filter_new()
-    opcode = bluez.cmd_opcode_pack(bluez.OGF_HOST_CTL, 
+    opcode = bluez.cmd_opcode_pack(bluez.OGF_HOST_CTL,
             bluez.OCF_READ_INQUIRY_MODE)
     bluez.hci_filter_set_ptype(flt, bluez.HCI_EVENT_PKT)
     bluez.hci_filter_set_event(flt, bluez.EVT_CMD_COMPLETE);
@@ -36,7 +36,7 @@ def read_inquiry_mode(sock):
     sock.setsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, flt )
 
     # first read the current inquiry mode.
-    bluez.hci_send_cmd(sock, bluez.OGF_HOST_CTL, 
+    bluez.hci_send_cmd(sock, bluez.OGF_HOST_CTL,
             bluez.OCF_READ_INQUIRY_MODE )
 
     pkt = sock.recv(255)
@@ -56,7 +56,7 @@ def write_inquiry_mode(sock, mode):
     # Setup socket filter to receive only events related to the
     # write_inquiry_mode command
     flt = bluez.hci_filter_new()
-    opcode = bluez.cmd_opcode_pack(bluez.OGF_HOST_CTL, 
+    opcode = bluez.cmd_opcode_pack(bluez.OGF_HOST_CTL,
             bluez.OCF_WRITE_INQUIRY_MODE)
     bluez.hci_filter_set_ptype(flt, bluez.HCI_EVENT_PKT)
     bluez.hci_filter_set_event(flt, bluez.EVT_CMD_COMPLETE);
@@ -64,7 +64,7 @@ def write_inquiry_mode(sock, mode):
     sock.setsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, flt )
 
     # send the command!
-    bluez.hci_send_cmd(sock, bluez.OGF_HOST_CTL, 
+    bluez.hci_send_cmd(sock, bluez.OGF_HOST_CTL,
             bluez.OCF_WRITE_INQUIRY_MODE, struct.pack("B", mode) )
 
     pkt = sock.recv(255)
@@ -169,15 +169,15 @@ def closeSocket(sock):
 
 def getDeviceID(filename = 'id.txt'):
     # Initialization
-    device_id = 99
+    device_id = "dev_id_default_id"
     currentDir = os.path.dirname(os.path.realpath(__file__))
     pathfile = os.path.join(currentDir,filename)
     try:
         file = open(pathfile, "r")
-        strint = file.read()
-        device_id = int(strint)
+        pi_id = file.read()
+        device_id = str(pi_id)
     except IOError:
-        device_id = 99
+        device_id = "dev_id_read_err"
 
     return device_id
 
@@ -202,11 +202,11 @@ def generateRows(rawResult,addrDict = {}):
 
     def iterate(item):
         return {
-            'mac_address':item[0], 
-            'signal':item[1], 
-            'device_id':device_id, 
-            'datetime':item[2], 
-            'name':addrDict.get[item[0]] if addrDict.get(item[0],None) != None else '-' 
+            'mac_address':item[0],
+            'signal':item[1],
+            'device_id':device_id,
+            'datetime':item[2],
+            'name':addrDict.get[item[0]] if addrDict.get(item[0],None) != None else '-'
         }
 
     return map(iterate,logs)
@@ -226,7 +226,7 @@ def callback_function(response):
 
 def sendData(data,url):
     try:
-        key = {'data': data}    
+        key = {'data': data}
         headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
         reboot = "sudo reboot"
         print('Sending {}'.format(data))
@@ -234,7 +234,7 @@ def sendData(data,url):
         unirest.timeout(30)
         #r = requests.post(url, data=key, headers=headers)
         r = unirest.post(url,headers=headers,params=key,callback=callback_function)
-            
+
     except requests.ConnectionError:
         os.system(reboot)
 
@@ -253,7 +253,7 @@ while True:
 
         if(len(rows) != 0):
             sendData(jsonResult,'http://api.blusense.co/Bluetooth.php')
-    	
+
         del rows
         del jsonResult
     except KeyboardInterrupt as e:
