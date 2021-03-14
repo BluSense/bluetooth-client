@@ -44,17 +44,17 @@ echo ""
 echo "Your RaspberryPi device id :"
 #read deviceid
 #Set default deviceid
-random_number = $[ ( $RANDOM % 100 )  + 1 ]
-deviceid = "x${random_number}"
+$random_number = $[ ( $RANDOM % 100 )  + 1 ]
+$deviceid = "x${random_number}"
 
 #read pi sn.
-procinfo = $(cat /proc/cpuinfo | grep Serial)
-rpi_serial = $(echo $procinfo | tr " " "\n" | tail -1)
+$procinfo = $(cat /proc/cpuinfo | grep Serial)
+$rpi_serial = $(echo $procinfo | tr " " "\n" | tail -1)
 
 if [ -z $rpi_serial ]; then
-    echo "Raspberry Pi serial number not found" >> $LOG_FILE 2>&1
+    echo "Raspberry Pi serial number not found"
 else
-		deviceid = $rpi_serial
+		$deviceid = $rpi_serial
     echo $deviceid
 fi
 
