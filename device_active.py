@@ -9,7 +9,7 @@ def get_id(file_name):
 	try:
 		file = open(file_name, "r")
 		pi_id = file.read()
-		return int(pi_id)
+		return str(pi_id)
 	except IOError:
 		return device_id = "dev_id_read_err"
 numbers = get_id(pathfile)
