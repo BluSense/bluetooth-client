@@ -74,12 +74,12 @@ mkdir /srv/bt_monitor/save
 mkdir /srv/bt_monitor/log
 cd /srv/bt_monitor
 echo $deviceid >> id.txt
-curl -s https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan.py
-curl -s https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan_offline.py
-curl -s https://raw.githubusercontent.com/BluSense/bluetooth-client/master/async_datasend.py
-curl -s https://raw.githubusercontent.com/BluSense/bluetooth-client/master/check_internet.py
-curl -s https://raw.githubusercontent.com/BluSense/bluetooth-client/master/device_active.py
-curl -s https://raw.githubusercontent.com/BluSense/bluetooth-client/master/reboot_mr3020.py
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan.py
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan_offline.py
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/async_datasend.py
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/check_internet.py
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/device_active.py
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/reboot_mr3020.py
 (crontab -u root -l; echo "@reboot /bin/sleep 180 ; /usr/bin/python /srv/bt_monitor/bluetooth_scan_offline.py ; /sbin/reboot" ) | crontab -u root -
 (crontab -u root -l; echo "@reboot /bin/sleep 200 ; /usr/bin/python /srv/bt_monitor/async_datasend.py" ) | crontab -u root -
 (crontab -u root -l; echo "*/1 * * * * /usr/bin/python /srv/bt_monitor/device_active.py" ) | crontab -u root -
