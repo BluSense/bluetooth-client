@@ -89,46 +89,20 @@ ACCT_ID="pyx825ve"
 INSTALL_URL="https://www.dataplicity.com/$ACCT_ID.py | sudo python"
 LOG_FILE="/var/log/mass-install-dp.log"
 
-#Wait maximum 30 seconds on network connectivity before giving up
-limit=30
-retry=0
 
+echo "Configuring hostname..." >> $LOG_FILE 2>&1
 
+echo $deviceid | sudo tee /etc/hostname
 
-if [ ! -e /opt/dataplicity/mass-install-hostname ]; then
-    echo "Configuring hostname..." >> $LOG_FILE 2>&1
+sed -i '$d' /etc/hosts
+printf "127.0.0.1\t$deviceid\n" | sudo tee --append /etc/hosts
+hostnamectl set-hostname $deviceid
+systemctl restart avahi-daemon
 
-    rpi_serial=$deviceid
+echo "Dataplicity will now be installed..." >> $LOG_FILE 2>&1
 
-    echo $rpi_serial | sudo tee /etc/hostname
+/bin/sh -c "curl -k $INSTALL_URL" >> $LOG_FILE 2>&1
 
-    sed -i '$d' /etc/hosts
-    printf "127.0.0.1\t$rpi_serial\n" | sudo tee --append /etc/hosts
-
-    mkdir /opt/dataplicity
-    touch /opt/dataplicity/mass-install-hostname
-
-    echo "Rebooting..." >> $LOG_FILE 2>&1
-    reboot
-fi
-
-if [ ! -e /opt/dataplicity/tuxtunnel/auth ]; then
-    echo $IFACE >> $LOG_FILE 2>&1
-
-    until ping -c 1 www.google.com > /dev/null ; do
-        sleep 1
-        retry=$(($retry+1))
-        if [ $retry -eq $limit ]; then
-            echo "Interface not connected and limit reached..." >> $LOG_FILE
-            exit 0
-        fi
-    done
-
-    echo "Dataplicity will now be installed..." >> $LOG_FILE 2>&1
-
-    /bin/sh -c "curl -k $INSTALL_URL" >> $LOG_FILE 2>&1
-
-fi
 
 echo "   ___  _         _       _     "
 echo "  / __\(_) _ __  (_) ___ | |__  "
