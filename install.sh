@@ -41,25 +41,6 @@ echo "--------------------------------------"
 echo "Welcome to Chula Bluetooth scan client"
 echo "--------------------------------------"
 echo ""
-echo "Your RaspberryPi device id :"
-#read deviceid
-#Set default deviceid
-random_number=$[ ( $RANDOM % 100 )  + 1 ]
-deviceid="x${random_number}"
-
-#read pi sn.
-procinfo=$(cat /proc/cpuinfo | grep Serial)
-rpi_serial=$(echo $procinfo | tr " " "\n" | tail -1)
-
-if [ -z $rpi_serial ]; then
-    echo "Raspberry Pi serial number not found"
-else
-		deviceid=$rpi_serial
-    echo $deviceid
-fi
-
-echo "Is connect to Industial 4G Router? (y/n)"
-read is_industialrouter
 
 
 #echo "deb http://mirror1.ku.ac.th/raspbian/raspbian/ stretch main contrib non-free rpi" >> /etc/apt/sources.list
@@ -69,34 +50,28 @@ apt-get update -y
 apt-get dist-upgrade -y
 apt-get install -y bluez python-bluez python-pip screen
 pip install requests
-mkdir /srv/bt_monitor
-mkdir /srv/bt_monitor/save
-mkdir /srv/bt_monitor/log
-cd /srv/bt_monitor
-echo $deviceid >> id.txt
-curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan.py
-curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan_offline.py
-curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/async_datasend.py
-curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/check_internet.py
-curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/device_active.py
-curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/reboot_mr3020.py
-(crontab -u root -l; echo "@reboot /bin/sleep 180 ; /usr/bin/python /srv/bt_monitor/bluetooth_scan_offline.py ; /sbin/reboot" ) | crontab -u root -
-(crontab -u root -l; echo "@reboot /bin/sleep 200 ; /usr/bin/python /srv/bt_monitor/async_datasend.py" ) | crontab -u root -
-(crontab -u root -l; echo "*/1 * * * * /usr/bin/python /srv/bt_monitor/device_active.py" ) | crontab -u root -
-if [ $is_industialrouter = n ]; then
-	(crontab -u root -l; echo "*/4 * * * * /usr/bin/python /srv/bt_monitor/check_internet.py" ) | crontab -u root -
-	(crontab -u root -l; echo "0 2 * * * /usr/bin/python /srv/bt_monitor/reboot_mr3020.py" ) | crontab -u root -
-fi
-(crontab -u root -l; echo "0 3 * * * /sbin/reboot" ) | crontab -u root -
 
 systemctl enable ssh
 timedatectl set-timezone Asia/Bangkok
 apt-get install ntpdate
 ntpd -gq
 
-#installing remote management from dataplicity
+mkdir /srv/bt_monitor
+mkdir /srv/bt_monitor/save
+mkdir /srv/bt_monitor/log
+cd /srv/bt_monitor
+#echo $deviceid >> id.txt
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan.py
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan_offline.py
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/async_datasend.py
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/check_internet.py
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/device_active.py
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/reboot_mr3020.py
 
-curl -s https://www.dataplicity.com/pyx825ve.py | sudo python
+cd /etc/network/if-up.d/
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/1st-bootup
+chmod 755 1st-bootup
+
 
 echo "   ___  _         _       _     "
 echo "  / __\(_) _ __  (_) ___ | |__  "
@@ -105,8 +80,8 @@ echo "/ /    | || | | || |\__ \| | | |"
 echo "\/     |_||_| |_||_||___/|_| |_|"
 echo "                                "
 
-echo "Finish install RaspPi ID : "
-echo $deviceid
+echo "Finish install Bluetooth Sensor "
+echo "--> Reboot to Finish setting ID & Dataplicity Remote "
 echo ""
 echo "Reboot ? (y/n) :"
 read isreboot

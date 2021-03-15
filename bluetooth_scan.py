@@ -175,10 +175,9 @@ def getDeviceID(filename = 'id.txt'):
     try:
         file = open(pathfile, "r")
         pi_id = file.read()
-        device_id = str(pi_id)
+        device_id = int(pi_id)
     except IOError:
-        device_id = "dev_id_read_err"
-
+        device_id = 999
     return device_id
 
 def getAddressDeviceName(sock,rawResult):

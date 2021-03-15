@@ -9,9 +9,9 @@ def get_id(file_name):
 	try:
 		file = open(file_name, "r")
 		pi_id = file.read()
-		return str(pi_id)
+		return int(pi_id)
 	except IOError:
-		return device_id = "dev_id_read_err"
+		return 999
 numbers = get_id(pathfile)
 id = numbers
 
