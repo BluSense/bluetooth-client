@@ -87,10 +87,8 @@ echo "Setting up Dataplicity ..."
 
 ACCT_ID="pyx825ve"
 INSTALL_URL="https://www.dataplicity.com/$ACCT_ID.py | sudo python"
-LOG_FILE="/var/log/mass-install-dp.log"
 
-
-echo "Configuring hostname..." >> $LOG_FILE 2>&1
+echo "Configuring hostname..."
 
 echo $deviceid | sudo tee /etc/hostname
 
@@ -99,10 +97,9 @@ printf "127.0.0.1\t$deviceid\n" | sudo tee --append /etc/hosts
 hostnamectl set-hostname $deviceid
 systemctl restart avahi-daemon
 
-echo "Dataplicity will now be installed..." >> $LOG_FILE 2>&1
+echo "Dataplicity will now be installed..."
 
-/bin/sh -c "curl -k $INSTALL_URL" >> $LOG_FILE 2>&1
-
+/bin/sh -c "curl -k $INSTALL_URL"
 
 echo "   ___  _         _       _     "
 echo "  / __\(_) _ __  (_) ___ | |__  "
