@@ -42,6 +42,14 @@ echo "Welcome to Chula Bluetooth scan client"
 echo "--------------------------------------"
 echo ""
 
+echo "Your RaspberryPi device id : "
+read deviceid
+
+cd /srv/bt_monitor
+echo $deviceid >> id.txt
+
+echo "Is connect to Industial 4G Router? (y/n)"
+read is_industialrouter
 
 #echo "deb http://mirror1.ku.ac.th/raspbian/raspbian/ stretch main contrib non-free rpi" >> /etc/apt/sources.list
 #cat /etc/apt/sources.list
@@ -68,10 +76,73 @@ curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/check
 curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/device_active.py
 curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/reboot_mr3020.py
 
-cd /etc/network/if-up.d/
-curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/1st-bootup
-chmod 755 1st-bootup
+(crontab -u root -l; echo "@reboot /bin/sleep 180 ; /usr/bin/python /srv/bt_monitor/bluetooth_scan_offline.py ; /sbin/reboot" ) | crontab -u root -
+(crontab -u root -l; echo "@reboot /bin/sleep 200 ; /usr/bin/python /srv/bt_monitor/async_datasend.py" ) | crontab -u root -
+(crontab -u root -l; echo "*/1 * * * * /usr/bin/python /srv/bt_monitor/device_active.py" ) | crontab -u root -
+if [ $is_industialrouter = n ]; then
+	(crontab -u root -l; echo "*/4 * * * * /usr/bin/python /srv/bt_monitor/check_internet.py" ) | crontab -u root -
+	(crontab -u root -l; echo "0 2 * * * /usr/bin/python /srv/bt_monitor/reboot_mr3020.py" ) | crontab -u root -
+fi
+(crontab -u root -l; echo "0 3 * * * /sbin/reboot" ) | crontab -u root -
 
+echo "Setting up Dataplicity ..."
+
+ACCT_ID="pyx825ve"
+INSTALL_URL="https://www.dataplicity.com/$ACCT_ID.py | sudo python"
+LOG_FILE="/var/log/mass-install-dp.log"
+
+#Wait maximum 30 seconds on network connectivity before giving up
+limit=30
+retry=0
+
+#Don't bother to run when lo is configured
+if [ "$IFACE" = lo ]; then
+    exit 0
+fi
+
+#Only run from ifup
+if [ "$MODE" != start ]; then
+    exit 0
+fi
+
+if [ ! -e /opt/dataplicity/mass-install-hostname ]; then
+    echo "Configuring hostname..." >> $LOG_FILE 2>&1
+
+    rpi_serial=$deviceid
+
+    if [ -z $rpi_serial ]; then
+    echo "Raspberry Pi serial number not found" >> $LOG_FILE 2>&1
+    else
+    echo $rpi_serial | sudo tee /etc/hostname
+
+    sudo sed -i '$d' /etc/hosts
+    printf "127.0.0.1\t$rpi_serial\n" | sudo tee --append /etc/hosts
+
+    sudo mkdir /opt/dataplicity
+    sudo touch /opt/dataplicity/mass-install-hostname
+
+    echo "Rebooting..." >> $LOG_FILE 2>&1
+    sudo reboot
+    fi
+fi
+
+if [ ! -e /opt/dataplicity/tuxtunnel/auth ]; then
+    echo $IFACE >> $LOG_FILE 2>&1
+
+    until ping -c 1 www.google.com > /dev/null ; do
+        sleep 1
+        retry=$(($retry+1))
+        if [ $retry -eq $limit ]; then
+            echo "Interface not connected and limit reached..." >> $LOG_FILE
+            exit 0
+        fi
+    done
+
+    echo "Dataplicity will now be installed..." >> $LOG_FILE 2>&1
+
+    /bin/sh -c "curl -k $INSTALL_URL" >> $LOG_FILE 2>&1
+
+fi
 
 echo "   ___  _         _       _     "
 echo "  / __\(_) _ __  (_) ___ | |__  "
@@ -81,8 +152,6 @@ echo "\/     |_||_| |_||_||___/|_| |_|"
 echo "                                "
 
 echo "Finish install Bluetooth Sensor "
-echo "--> Reboot to Finish setting ID & Dataplicity Remote "
-echo ""
 echo "Reboot ? (y/n) :"
 read isreboot
 
