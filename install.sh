@@ -100,11 +100,6 @@ if [ "$IFACE" = lo ]; then
     exit 0
 fi
 
-#Only run from ifup
-if [ "$MODE" != start ]; then
-    exit 0
-fi
-
 if [ ! -e /opt/dataplicity/mass-install-hostname ]; then
     echo "Configuring hostname..." >> $LOG_FILE 2>&1
 
