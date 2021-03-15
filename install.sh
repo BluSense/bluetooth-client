@@ -45,9 +45,6 @@ echo ""
 echo "Your RaspberryPi device id : "
 read deviceid
 
-cd /srv/bt_monitor
-echo $deviceid >> id.txt
-
 echo "Is connect to Industial 4G Router? (y/n)"
 read is_industialrouter
 
@@ -68,7 +65,8 @@ mkdir /srv/bt_monitor
 mkdir /srv/bt_monitor/save
 mkdir /srv/bt_monitor/log
 cd /srv/bt_monitor
-#echo $deviceid >> id.txt
+
+echo $deviceid >> id.txt
 curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan.py
 curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/bluetooth_scan_offline.py
 curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/async_datasend.py
