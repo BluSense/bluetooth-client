@@ -93,10 +93,7 @@ LOG_FILE="/var/log/mass-install-dp.log"
 limit=30
 retry=0
 
-#Don't bother to run when lo is configured
-if [ "$IFACE" = lo ]; then
-    exit 0
-fi
+
 
 if [ ! -e /opt/dataplicity/mass-install-hostname ]; then
     echo "Configuring hostname..." >> $LOG_FILE 2>&1
@@ -105,14 +102,14 @@ if [ ! -e /opt/dataplicity/mass-install-hostname ]; then
 
     echo $rpi_serial | sudo tee /etc/hostname
 
-    sudo sed -i '$d' /etc/hosts
+    sed -i '$d' /etc/hosts
     printf "127.0.0.1\t$rpi_serial\n" | sudo tee --append /etc/hosts
 
-    sudo mkdir /opt/dataplicity
-    sudo touch /opt/dataplicity/mass-install-hostname
+    mkdir /opt/dataplicity
+    touch /opt/dataplicity/mass-install-hostname
 
     echo "Rebooting..." >> $LOG_FILE 2>&1
-    sudo reboot
+    reboot
 fi
 
 if [ ! -e /opt/dataplicity/tuxtunnel/auth ]; then
