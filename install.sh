@@ -103,9 +103,6 @@ if [ ! -e /opt/dataplicity/mass-install-hostname ]; then
 
     rpi_serial=$deviceid
 
-    if [ -z $rpi_serial ]; then
-    echo "Raspberry Pi serial number not found" >> $LOG_FILE 2>&1
-    else
     echo $rpi_serial | sudo tee /etc/hostname
 
     sudo sed -i '$d' /etc/hosts
@@ -116,7 +113,6 @@ if [ ! -e /opt/dataplicity/mass-install-hostname ]; then
 
     echo "Rebooting..." >> $LOG_FILE 2>&1
     sudo reboot
-    fi
 fi
 
 if [ ! -e /opt/dataplicity/tuxtunnel/auth ]; then
