@@ -7,13 +7,13 @@ sudo@SDCard preparation - Rasbian installation
   - Open Etcher and select from your hard drive the Raspberry Pi .img or  .zip file you wish to write to the SD card.
   - Select the SD card you wish to write your image to.
   - Review your selections and click 'Flash!' to begin writing data to the SD card.
-4. Plug & Run & Connect to LAN-Internet
+4. Create blank 'SSH' file to SDCard (named : boot) folder & Run & Connect to LAN-Internet
 @Raspberry Pi
 -----------------------------
 5. Wait for RaspberryPi finish booting
 6. Login User:pi Password:raspberry
 7. Type sudo su
-8. Type wget -O install.sh https://t.ly/ktWi
+8. Type wget -O install.sh https://raw.githubusercontent.com/BluSense/bluetooth-client/master/install.sh or https://t.ly/ktWi
 9. Type chmod +x install.sh
 10. Type ./install.sh
 11. After install press y to reboot
