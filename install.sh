@@ -75,7 +75,7 @@ curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/devic
 curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/reboot_mr3020.py
 
 (crontab -u root -l; echo "@reboot /bin/sleep 180 ; /usr/bin/python /srv/bt_monitor/bluetooth_scan_offline.py ; /sbin/reboot" ) | crontab -u root -
-(crontab -u root -l; echo "@reboot /bin/sleep 200 ; /usr/bin/python /srv/bt_monitor/async_datasend.py" ) | crontab -u root -
+(crontab -u root -l; echo "*/1 * * * * /usr/bin/python /srv/bt_monitor/async_datasend.py" ) | crontab -u root -
 (crontab -u root -l; echo "*/1 * * * * /usr/bin/python /srv/bt_monitor/device_active.py" ) | crontab -u root -
 if [ $is_industialrouter = n ]; then
 	(crontab -u root -l; echo "*/4 * * * * /usr/bin/python /srv/bt_monitor/check_internet.py" ) | crontab -u root -

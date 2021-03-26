@@ -3,6 +3,7 @@ import requests
 import glob
 import time
 import json
+import sys
 
 def is_json(myjson):
   try:
@@ -55,7 +56,7 @@ try:
             data = current_file.read()
             if len(data) != 0:
                 if is_json(data):
-                    sendData(data,'http://data.blusense.co/Bluetooth.php',fname)
+                    sendData(data,'http://chula.blusense.co/Bluetooth.php',fname)
                 else:
                     print("Json file corrupting")
                     os.rename(fname, fname + '.err')
@@ -66,8 +67,9 @@ try:
 
     sys.exit(0)
 
-except:
+except Exception as e:
     print("Found Error")
+    print(e)
     #time.sleep(60)
     sys.exit(1)
 finally:
