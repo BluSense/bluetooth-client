@@ -73,8 +73,8 @@ curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/async
 curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/check_internet.py
 curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/device_active.py
 curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/reboot_mr3020.py
+curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/change_id.sh
 
-(crontab -u root -l; echo "@reboot /bin/sleep 15 ; /usr/bin/python /srv/bt_monitor/check_devicename_dataplicity.py" ) | crontab -u root -
 (crontab -u root -l; echo "@reboot /bin/sleep 180 ; /usr/bin/python /srv/bt_monitor/bluetooth_scan_offline.py ; /sbin/reboot" ) | crontab -u root -
 (crontab -u root -l; echo "*/1 * * * * /usr/bin/python /srv/bt_monitor/async_datasend.py" ) | crontab -u root -
 (crontab -u root -l; echo "*/1 * * * * /usr/bin/python /srv/bt_monitor/device_active.py" ) | crontab -u root -
@@ -91,10 +91,10 @@ INSTALL_URL="https://www.dataplicity.com/$ACCT_ID.py | sudo python"
 
 echo "Configuring hostname..."
 
-echo $deviceid | sudo tee /etc/hostname
+echo $deviceid | tee /etc/hostname
 
 sed -i '$d' /etc/hosts
-printf "127.0.0.1\t$deviceid\n" | sudo tee --append /etc/hosts
+printf "127.0.0.1\t$deviceid\n" | tee --append /etc/hosts
 hostnamectl set-hostname $deviceid
 systemctl restart avahi-daemon
 
