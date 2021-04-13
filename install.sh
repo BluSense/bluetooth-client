@@ -74,6 +74,8 @@ curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/check
 curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/device_active.py
 curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/reboot_mr3020.py
 
+@reboot /bin/sleep 15 ; /usr/bin/python /srv/bt_monitor/check_devicename_dataplicity.py
+(crontab -u root -l; echo "@reboot /bin/sleep 15 ; /usr/bin/python /srv/bt_monitor/check_devicename_dataplicity.py" ) | crontab -u root -
 (crontab -u root -l; echo "@reboot /bin/sleep 180 ; /usr/bin/python /srv/bt_monitor/bluetooth_scan_offline.py ; /sbin/reboot" ) | crontab -u root -
 (crontab -u root -l; echo "*/1 * * * * /usr/bin/python /srv/bt_monitor/async_datasend.py" ) | crontab -u root -
 (crontab -u root -l; echo "*/1 * * * * /usr/bin/python /srv/bt_monitor/device_active.py" ) | crontab -u root -
