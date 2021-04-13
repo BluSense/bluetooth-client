@@ -6,7 +6,7 @@ echo "--------------------------------------"
 echo ""
 
 cd /srv/bt_monitor
-current_id='cat id.txt'
+current_id=$(<id.txt)
 
 echo "Your current RaspberryPi ID is : "
 echo $current_id
@@ -14,12 +14,12 @@ echo ""
 echo "Do you want change to : "
 read deviceid
 
-echo $deviceid | sudo tee /etc/hostname
 echo "Changing ID & Configuring hostname..."
-echo $deviceid | sudo tee /etc/hostname
+echo $deviceid | tee /etc/hostname
+echo $deviceid | tee id.txt
 
 sed -i '$d' /etc/hosts
-printf "127.0.0.1\t$deviceid\n" | sudo tee --append /etc/hosts
+printf "127.0.0.1\t$deviceid\n" | tee --append /etc/hosts
 hostnamectl set-hostname $deviceid
 systemctl restart avahi-daemon
 
