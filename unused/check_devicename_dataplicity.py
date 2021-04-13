@@ -1,3 +1,5 @@
+import os
+import sys
 import socket
 
 def getDeviceID(filename = 'id.txt'):
