@@ -86,7 +86,7 @@ fi
 (crontab -u root -l; echo "0 3 * * * /sbin/reboot" ) | crontab -u root -
 
 echo "Installing DOCKER ..."
-apt-get install docker-compose
+apt-get install docker-compose -y
 
 echo "Configuring hostname..."
 
