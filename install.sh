@@ -58,18 +58,12 @@ apt-get install -y \
     curl \
     gnupg \
     lsb-release
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --batch --yes --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 apt-get update -y
 apt-get install -y docker-ce docker-ce-cli containerd.io
-
-echo "Shellhub will now be installed CALL the following command..."
-INSTALL_URL="curl -Ssf http://shellhub.blusense.co/install.sh?tenant_id=db1bdec8-fae7-4f8b-8556-2da8bf8f4d14&preferred_hostname=$deviceid&keepalive_interval=5"
-echo "$INSTALL_URL | sh"
-
-/bin/sh -c "$INSTALL_URL | sh"
 
 apt-get dist-upgrade -y
 apt-get install -y bluez python-bluez python-pip screen
@@ -115,3 +109,6 @@ printf "127.0.0.1\t$deviceid\n" | tee --append /etc/hosts
 hostnamectl set-hostname $deviceid
 systemctl restart avahi-daemon
 
+echo "Shellhub will now be installed CALL the following command..."
+INSTALL_URL="curl -Ssf http://shellhub.blusense.co/install.sh?tenant_id=db1bdec8-fae7-4f8b-8556-2da8bf8f4d14&preferred_hostname=$deviceid&keepalive_interval=5"
+echo "$INSTALL_URL | sh"
