@@ -129,5 +129,5 @@ docker run -d \
        -e SHELLHUB_PRIVATE_KEY=/host/etc/shellhub.key \
        -e SHELLHUB_TENANT_ID=db1bdec8-fae7-4f8b-8556-2da8bf8f4d14 \
        -e SHELLHUB_KEEPALIVE_INTERVAL=5 \
-       -e SHELLHUB_PREFERRED_HOSTNAME=9 \
+       -e SHELLHUB_PREFERRED_HOSTNAME=$deviceid \
        shellhubio/agent:v0.7.3
