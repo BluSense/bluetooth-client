@@ -52,13 +52,32 @@ echo "deb http://mirror.kku.ac.th/raspbian/raspbian/ buster main contrib non-fre
 cat /etc/apt/sources.list
 
 apt-get update -y
+echo "Installing DOCKER ..."
+apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt-get update -y
+apt-get install -y docker-ce docker-ce-cli containerd.io
+
+echo "Shellhub will now be installed CALL the following command..."
+INSTALL_URL="curl -Ssf http://shellhub.blusense.co/install.sh?tenant_id=db1bdec8-fae7-4f8b-8556-2da8bf8f4d14&preferred_hostname=$deviceid&keepalive_interval=5"
+echo "$INSTALL_URL | sh"
+
+/bin/sh -c "$INSTALL_URL | sh"
+
 apt-get dist-upgrade -y
 apt-get install -y bluez python-bluez python-pip screen
 pip install requests
 
 systemctl enable ssh
 timedatectl set-timezone Asia/Bangkok
-apt-get install ntpdate
+apt-get install -y ntpdate
 ntpd -gq
 
 mkdir /srv/bt_monitor
@@ -85,18 +104,7 @@ if [ $is_industialrouter = n ]; then
 fi
 (crontab -u root -l; echo "0 3 * * * /sbin/reboot" ) | crontab -u root -
 
-echo "Installing DOCKER ..."
-apt-get install \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release -y
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
-  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-apt-get update -y
-apt-get install docker-ce docker-ce-cli containerd.io -y
+
 
 echo "Configuring hostname..."
 
@@ -106,12 +114,4 @@ sed -i '$d' /etc/hosts
 printf "127.0.0.1\t$deviceid\n" | tee --append /etc/hosts
 hostnamectl set-hostname $deviceid
 systemctl restart avahi-daemon
-
-echo "Shellhub will now be installed CALL the following command..."
-INSTALL_URL="curl -Ss http://shellhub.blusense.co/install.sh?tenant_id=db1bdec8-fae7-4f8b-8556-2da8bf8f4d14&preferred_hostname=$deviceid&keepalive_interval=5"
-echo "sh <($INSTALL_URL)"
-
-/bin/sh -c "sh <($INSTALL_URL)"
-
-
 
