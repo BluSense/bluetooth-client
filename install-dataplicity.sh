@@ -85,8 +85,10 @@ if [ $is_industialrouter = n ]; then
 fi
 (crontab -u root -l; echo "0 3 * * * /sbin/reboot" ) | crontab -u root -
 
-echo "Installing DOCKER ..."
-apt-get install docker-compose
+echo "Setting up Dataplicity ..."
+
+ACCT_ID="pyx825ve"
+INSTALL_URL="https://www.dataplicity.com/$ACCT_ID.py | sudo python"
 
 echo "Configuring hostname..."
 
@@ -97,10 +99,9 @@ printf "127.0.0.1\t$deviceid\n" | tee --append /etc/hosts
 hostnamectl set-hostname $deviceid
 systemctl restart avahi-daemon
 
-echo "Shellhub will now be installed..."
+echo "Dataplicity will now be installed..."
 
-curl -sSf http://shellhub.blusense.co/install.sh?tenant_id=db1bdec8-fae7-4f8b-8556-2da8bf8f4d14&preferred_hostname=$deviceid&keepalive_interval=5 | sh
-
+/bin/sh -c "curl -k $INSTALL_URL"
 
 echo "   ___  _         _       _     "
 echo "  / __\(_) _ __  (_) ___ | |__  "
