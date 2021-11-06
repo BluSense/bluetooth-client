@@ -98,8 +98,6 @@ if [ $is_industialrouter = n ]; then
 fi
 (crontab -u root -l; echo "0 3 * * * /sbin/reboot" ) | crontab -u root -
 
-
-
 echo "Configuring hostname..."
 
 echo $deviceid | tee /etc/hostname
@@ -110,5 +108,5 @@ hostnamectl set-hostname $deviceid
 systemctl restart avahi-daemon
 
 echo "Shellhub will now be installed CALL the following command..."
-INSTALL_URL="curl -Ssf http://shellhub.blusense.co/install.sh?tenant_id=db1bdec8-fae7-4f8b-8556-2da8bf8f4d14&preferred_hostname=$deviceid&keepalive_interval=5"
+INSTALL_URL="sh <(curl -Ss http://shellhub.blusense.co/install.sh?tenant_id=db1bdec8-fae7-4f8b-8556-2da8bf8f4d14&preferred_hostname=$deviceid&keepalive_interval=5)"
 echo "$INSTALL_URL | sh"
