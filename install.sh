@@ -109,4 +109,25 @@ systemctl restart avahi-daemon
 
 echo "Shellhub will now be installed CALL the following command..."
 INSTALL_URL="sh <(curl -Ss http://shellhub.blusense.co/install.sh?tenant_id=db1bdec8-fae7-4f8b-8556-2da8bf8f4d14&preferred_hostname=$deviceid&keepalive_interval=5)"
-echo "$INSTALL_URL | sh"
+echo "$INSTALL_URL"
+
+docker run -d \
+       --name=shellhub \
+       --restart=on-failure \
+       --privileged \
+       --net=host \
+       --pid=host \
+       -v /:/host \
+       -v /dev:/dev \
+       -v /var/run/docker.sock:/var/run/docker.sock \
+       -v /etc/passwd:/etc/passwd \
+       -v /etc/group:/etc/group \
+       -v /etc/resolv.conf:/etc/resolv.conf \
+       -v /var/run:/var/run \
+       -v /var/log:/var/log \
+       -e SHELLHUB_SERVER_ADDRESS=http://shellhub.blusense.co \
+       -e SHELLHUB_PRIVATE_KEY=/host/etc/shellhub.key \
+       -e SHELLHUB_TENANT_ID=db1bdec8-fae7-4f8b-8556-2da8bf8f4d14 \
+       -e SHELLHUB_KEEPALIVE_INTERVAL=5 \
+       -e SHELLHUB_PREFERRED_HOSTNAME=9 \
+       shellhubio/agent:v0.7.3
