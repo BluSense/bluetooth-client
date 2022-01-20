@@ -48,7 +48,7 @@ read deviceid
 echo "Is connect to Industial 4G Router? (y/n)"
 read is_industialrouter
 
-echo "deb http://mirror.kku.ac.th/raspbian/raspbian/ buster main contrib non-free rpi" >> /etc/apt/sources.list
+#echo "deb http://mirror.kku.ac.th/raspbian/raspbian/ buster main contrib non-free rpi" >> /etc/apt/sources.list
 cat /etc/apt/sources.list
 
 apt-get update -y
@@ -131,3 +131,17 @@ docker run -d \
        -e SHELLHUB_KEEPALIVE_INTERVAL=5 \
        -e SHELLHUB_PREFERRED_HOSTNAME=$deviceid \
        shellhubio/agent:v0.7.3
+echo "   ___  _         _       _     "
+echo "  / __\(_) _ __  (_) ___ | |__  "
+echo " / _\  | || '_ \ | |/ __|| '_ \ "
+echo "/ /    | || | | || |\__ \| | | |"
+echo "\/     |_||_| |_||_||___/|_| |_|"
+echo "                                "
+
+echo "Finish install Bluetooth Sensor "
+echo "Reboot ? (y/n) :"
+read isreboot
+
+if [ $isreboot = y ]; then
+	reboot
+fi
