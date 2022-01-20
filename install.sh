@@ -48,7 +48,7 @@ read deviceid
 echo "Is connect to Industial 4G Router? (y/n)"
 read is_industialrouter
 
-echo "deb http://mirror1.ku.ac.th/raspbian/raspbian/ buster main contrib non-free rpi" >> /etc/apt/sources.list
+echo "deb http://mirror1.ku.ac.th/raspbian/raspbian/ buster main contrib non-free rpi" > /etc/apt/sources.list
 cat /etc/apt/sources.list
 
 apt-get update -y
