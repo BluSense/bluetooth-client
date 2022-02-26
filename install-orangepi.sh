@@ -52,12 +52,12 @@ read is_industialrouter
 #cat /etc/apt/sources.list
 
 apt-get update -y
-apt-get dist-upgrade -y
 
 apt install python2-minimal -y
 mkdir ~/bin
 PATH=~/bin:$PATH
 ln -s /usr/bin/python2 ~/bin/python
+apt-get install docker.io -y
 
 apt-get install -y bluez python-bluez screen
 
@@ -105,8 +105,6 @@ hostnamectl set-hostname $deviceid
 systemctl restart avahi-daemon
 
 echo "Shellhub will now be installed CALL the following command..."
-
-
 
 
 INSTALL_URL="sh <(curl -Ss http://shellhub.blusense.co/install.sh?tenant_id=db1bdec8-fae7-4f8b-8556-2da8bf8f4d14&preferred_hostname=$deviceid&keepalive_interval=5)"
