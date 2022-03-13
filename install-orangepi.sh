@@ -45,9 +45,9 @@ echo ""
 echo "Your OrangePi device id : "
 read deviceid
 
-echo "Your dummy0 MACADDR 00:00:00:00:03:XX id : "
+echo "Your dummy0 MACADDR 00:00:00:00:03:XX id (Enter XX): "
 read macaddr
-echo 'pre-up ifconfig dummy0 hw ether '$macaddr | tee --append /etc/network/interfaces
+echo 'pre-up ifconfig dummy0 hw ether 00:00:00:00:03:'$macaddr | tee --append /etc/network/interfaces
 /etc/init.d/networking restart
 
 echo "Is connect to Industial 4G Router? (y/n)"
@@ -67,7 +67,7 @@ apt-get install docker.io -y
 apt-get install -y bluez python-bluez screen
 
 curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
-python get-pip.py
+python2 get-pip.py
 pip install requests
 
 systemctl enable ssh
@@ -91,7 +91,7 @@ curl -O https://raw.githubusercontent.com/BluSense/bluetooth-client/master/chang
 chmod +x change_id.sh
 
 (crontab -u root -l; echo "@reboot /bin/sleep 180 ; /usr/bin/python2 /srv/bt_monitor/bluetooth_scan_offline.py ; /sbin/reboot" ) | crontab -u root -
-(crontab -u root -l; echo "@reboot /bin/sleep 30 ; /usr/bin/python2 /srv/bt_monitor/agent-orangepi ; /sbin/reboot" ) | crontab -u root -
+#(crontab -u root -l; echo "@reboot /bin/sleep 30 ; /usr/bin/python2 /srv/bt_monitor/agent-orangepi ; /sbin/reboot" ) | crontab -u root -
 (crontab -u root -l; echo "*/1 * * * * /usr/bin/python2 /srv/bt_monitor/async_datasend.py" ) | crontab -u root -
 (crontab -u root -l; echo "*/1 * * * * /usr/bin/python2 /srv/bt_monitor/device_active.py" ) | crontab -u root -
 if [ $is_industialrouter = n ]; then
