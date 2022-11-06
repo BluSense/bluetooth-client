@@ -74,8 +74,9 @@ pip install requests
 
 systemctl enable ssh
 timedatectl set-timezone Asia/Bangkok
-apt-get install -y ntpdate
-ntpd -gq
+timedatectl set-ntp true
+#apt-get install -y ntpdate
+#ntpd -gq
 
 mkdir /srv/bt_monitor
 mkdir /srv/bt_monitor/save
@@ -110,7 +111,7 @@ printf "127.0.0.1\t$deviceid\n" | tee --append /etc/hosts
 hostnamectl set-hostname $deviceid
 systemctl restart avahi-daemon
 
-if [ $is_shellhub = n ]; then
+if [ $is_shellhub = y ]; then
 	echo "Shellhub will now be installed CALL the following command..."
 	INSTALL_URL="sh <(curl -Ss http://shellhub.blusense.co/install.sh?tenant_id=db1bdec8-fae7-4f8b-8556-2da8bf8f4d14&preferred_hostname=$deviceid&keepalive_interval=5)"
 	echo "$INSTALL_URL"
