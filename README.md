@@ -16,7 +16,7 @@ Sudo@SDCard preparation - Rasbian installation
 7. Type sudo su
 9. Type wget -O install.sh https://goo.gl/BciKTo
 10. Type chmod +x install.sh
-11. OR @Single Line
+11. OR @Single Line # > 
     wget -O install.sh https://goo.gl/BciKTo && chmod +x install.sh && ./install.sh
 12. Type ./install.sh
     - Define deviceid (101...102)
