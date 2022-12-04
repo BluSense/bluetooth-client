@@ -14,13 +14,11 @@ Sudo@SDCard preparation - Rasbian installation
 5. Wait for RaspberryPi finish booting
 6. Login User:pi Password:raspberry
 7. Type sudo su
-8. Type wget -O install.sh https://goo.gl/BciKTo
-9. Type chmod +x install.sh
-10. Type ./install.sh
+9. Type wget -O install.sh https://goo.gl/BciKTo
+10. Type chmod +x install.sh
+11. OR @Single Line
+    wget -O install.sh https://goo.gl/BciKTo && chmod +x install.sh && ./install.sh
+12. Type ./install.sh
     - Define deviceid (101...102)
-11. After install press y to reboot
+13. After install press y to reboot
 =============================
-
-@Single Line
-sudo su
-wget -O install.sh https://goo.gl/BciKTo && chmod +x install.sh && ./install.sh
