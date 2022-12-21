@@ -19,13 +19,18 @@ Sudo@SDCard preparation - Rasbian installation
 11. Type ./install.sh And Define deviceid (101...102) OR @Single Line # > 
     wget -O install.sh https://goo.gl/BciKTo && chmod +x install.sh && ./install.sh
 
-    - ORANGEPI ZERO2
+- ORANGEPI ZERO2
 
-    wget -O install.sh https://raw.githubusercontent.com/BluSense/bluetooth-client/master/install-orangepi.sh && chmod +x install.sh && ./install.sh
+    - wget -O install.sh https://raw.githubusercontent.com/BluSense/bluetooth-client/master/install-orangepi.sh && chmod +x install.sh && ./install.sh
 
-    - ORANGEPI 4LTS
+- ORANGEPI 4LTS
 
-    wget -O install.sh https://raw.githubusercontent.com/BluSense/bluetooth-client/master/install-orangepi4lts.sh && chmod +x install.sh && ./install.sh
+    - wget -O install.sh https://raw.githubusercontent.com/BluSense/bluetooth-client/master/install-orangepi4lts.sh && chmod +x install.sh && ./install.sh
+    - wait to boot and login
+    - sudo nand-sata-install
+    - select 2 Boot from eMMC - system on eMMC
+    - select yes erase
+    - select ext4
 
 
 13. After install press y to reboot
