@@ -19,6 +19,15 @@ Sudo@SDCard preparation - Rasbian installation
 11. Type ./install.sh And Define deviceid (101...102) OR @Single Line # > 
     wget -O install.sh https://goo.gl/BciKTo && chmod +x install.sh && ./install.sh
 
+12. After install press y to reboot
+=============================
+
+
+@Orange Pi
+-----------------------------
+Burn SDCARD
+- https://drive.google.com/file/d/1N0A5XS4POfX-tSzOihvoxIdLMZqz1xJ6/view?usp=share_link
+
 - ORANGEPI ZERO2
 
     - wget -O install.sh https://raw.githubusercontent.com/BluSense/bluetooth-client/master/install-orangepi.sh && chmod +x install.sh && ./install.sh
@@ -31,7 +40,3 @@ Sudo@SDCard preparation - Rasbian installation
     - select 2 Boot from eMMC - system on eMMC
     - select yes erase
     - select ext4
-
-
-13. After install press y to reboot
-=============================
