@@ -57,6 +57,7 @@ read is_industialrouter
 #cat /etc/apt/sources.list
 
 apt-get update -y
+apt-get upgrade -y
 
 apt install python2-minimal -y
 #mkdir ~/bin
