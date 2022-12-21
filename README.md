@@ -16,12 +16,17 @@ Sudo@SDCard preparation - Rasbian installation
 7. Type sudo su
 9. Type wget -O install.sh https://goo.gl/BciKTo
 10. Type chmod +x install.sh
-11. OR @Single Line # > 
-    wget -O install.sh https://goo.gl/BciKTo && chmod +x install.sh && ./install.sh
---ORANGEPI--    
-    wget -O install.sh https://raw.githubusercontent.com/BluSense/bluetooth-client/master/install-orangepi.sh && chmod +x install.sh && ./install.sh
-    
-12. Type ./install.sh
+11. Type ./install.sh
     - Define deviceid (101...102)
+  
+12. OR @Single Line # > 
+    wget -O install.sh https://goo.gl/BciKTo && chmod +x install.sh && ./install.sh
+
+12.1. --ORANGEPI Zero2--    
+    wget -O install.sh https://raw.githubusercontent.com/BluSense/bluetooth-client/master/install-orangepi.sh && chmod +x install.sh && ./install.sh
+12.2. --ORANGEPI 4LTS--
+    wget -O install.sh https://raw.githubusercontent.com/BluSense/bluetooth-client/master/install-orangepi4lts.sh && chmod +x install.sh && ./install.sh
+
+
 13. After install press y to reboot
 =============================
