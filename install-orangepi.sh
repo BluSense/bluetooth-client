@@ -53,8 +53,8 @@ read deviceid
 echo "Is connect to Industial 4G Router? (y/n)"
 read is_industialrouter
 
-echo "http://ftp.debianclub.org/debian/ buster main arm64" > /etc/apt/sources.list
-cat /etc/apt/sources.list
+#echo "http://ftp.debianclub.org/debian/ buster main arm64" > /etc/apt/sources.list
+#cat /etc/apt/sources.list
 
 apt-get update -y
 
