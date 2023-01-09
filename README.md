@@ -24,6 +24,18 @@ Sudo@SDCard preparation - Rasbian installation
 
 
 @Orange Pi
+1. Download Debian_buster from https://drive.google.com/drive/folders/1W0Bm-GGvVqgiDeSdEy_PSGlA23ahMGC6
+    - Select from Backup : Orangepi4-lts_3.0.2_debian_buster_server_linux4.4.179.7z
+2. Flash Download Etcher and install it. --> https://etcher.io/
+3. Boot, got IP and login
+
+@ORANGEPI 4LTS
+4. apt-get update
+5. apt-get upgrade
+6. sudo nand-sata-install
+    - select 2 Boot from eMMC - system on eMMC
+    - select yes erase
+    - select ext4
 -----------------------------
 Burn SDCARD
 - https://drive.google.com/file/d/1N0A5XS4POfX-tSzOihvoxIdLMZqz1xJ6/view?usp=share_link
@@ -35,8 +47,3 @@ Burn SDCARD
 - ORANGEPI 4LTS
 
     - wget -O install.sh https://raw.githubusercontent.com/BluSense/bluetooth-client/master/install-orangepi4lts.sh && chmod +x install.sh && ./install.sh
-    - wait to boot and login
-    - sudo nand-sata-install
-    - select 2 Boot from eMMC - system on eMMC
-    - select yes erase
-    - select ext4
