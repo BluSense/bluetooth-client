@@ -58,6 +58,12 @@ read is_industialrouter
 
 apt-get update -y
 
+systemctl stop NetworkManager
+systemctl disable NetworkManager
+systemctl stop networking
+systemctl disable networking
+apt-get install dhcpcd5
+
 apt install python2-minimal -y
 #mkdir ~/bin
 #PATH=~/bin:$PATH
