@@ -161,6 +161,8 @@ gateway 192.168.1.1
 dns-nameservers 192.168.1.1 8.8.8.8 8.8.4.4
 END
 
+echo 'nameserver 192.168.1.1' > /etc/resolv.conf
+
 echo "   ___  _         _       _     "
 echo "  / __\(_) _ __  (_) ___ | |__  "
 echo " / _\  | || '_ \ | |/ __|| '_ \ "
