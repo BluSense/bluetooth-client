@@ -59,11 +59,12 @@ read is_industialrouter
 apt-get update -y
 #apt-get upgrade -y
 
-systemctl stop NetworkManager
-systemctl disable NetworkManager
-systemctl stop networking
-systemctl disable networking
-apt-get install dhcpcd5
+#systemctl stop NetworkManager
+#systemctl disable NetworkManager
+#systemctl stop networking
+#systemctl disable networking
+#apt-get install dhcpcd5
+
 
 apt install python2-minimal -y
 #mkdir ~/bin
@@ -145,6 +146,21 @@ systemctl restart avahi-daemon
 #       -e SHELLHUB_KEEPALIVE_INTERVAL=5 \
 #       -e SHELLHUB_PREFERRED_HOSTNAME=$deviceid \
 #       shellhubio/agent:v0.7.3
+
+cp /etc/network/interfaces /etc/network/interfaces.backup
+
+tee /etc/network/interfaces << END
+# Ethernet adapter 0
+auto eth0
+allow-hotplug eth0
+#no-auto-down eth0
+iface eth0 inet static
+address 192.168.1.100
+netmask 255.255.255.0
+gateway 192.168.1.1
+dns-nameservers 192.168.1.1 8.8.8.8 8.8.4.4
+END
+
 echo "   ___  _         _       _     "
 echo "  / __\(_) _ __  (_) ___ | |__  "
 echo " / _\  | || '_ \ | |/ __|| '_ \ "
