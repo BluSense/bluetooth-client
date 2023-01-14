@@ -25,13 +25,15 @@
     - Select : Orangepi4-lts_3.0.6_debian_buster_server_linux4.4.179.7z
     or
     download OPi4a ... OPi4d from github
-    cat OPi4* > OPi4Image.7z
+    
+    $ cat OPi4* > OPi4Image.7z
 
     https://drive.google.com/drive/folders/1Xk7b1jOMg-rftowFLExynLg0CyuQ7kCM
     - Select : Orangepizero2_2.2.0_debian_buster_server_linux4.9.170.7z
     or
     download OPiZero2a ... OPiZero2d from github
-    cat OPiZero2* > OPiZeroImage.7z
+    
+    $ cat OPiZero2* > OPiZeroImage.7z
 
 2. Flash Download Etcher and install it. --> https://etcher.io/
 3. Boot, got IP and login
